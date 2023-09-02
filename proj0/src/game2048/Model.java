@@ -1,5 +1,7 @@
 package game2048;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.Formatter;
 
 
@@ -93,6 +95,13 @@ public class Model {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for (int i=0; i<b.size();i++){
+            for (int j=0; j<b.size(); j++){
+                if (b.tile(i,j) == null){
+                    return true ;
+                }
+            }
+        }
 
 
         return false;
@@ -105,7 +114,14 @@ public class Model {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
-
+        for(int i=0; i<b.size(); i++){
+            for (int j=0; j<b.size(); j++){
+                if(b.tile(i,j)== null) continue;
+                if(b.tile(i,j).value() == MAX_PIECE){
+                    return true;
+                }
+            }
+        }
 
         return false;
     }
@@ -116,14 +132,24 @@ public class Model {
      * 1. There is at least one empty space on the board.
      * 2. There are two adjacent tiles with the same value.
      */
+
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
-
-
+        if(emptySpaceExists(b)) return true;
+        for(int i = 0; i < b.size(); i ++ ) {
+            for(int j = 0; j < b.size(); j ++ ) {
+                boolean leftOrRight = j + 1 < b.size() && b.tile(i, j).value() == b.tile(i, j + 1).value();
+                boolean upOrDown = i + 1 < b.size() && b.tile(i, j).value() == b.tile(i + 1, j).value();
+                if(leftOrRight || upOrDown) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     /** Tilt the board toward SIDE.
+     *
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
      *    the same value, they are merged into one Tile of twice the original
@@ -138,9 +164,190 @@ public class Model {
     public void tilt(Side side) {
         // TODO: Modify this.board (and if applicable, this.score) to account
         // for the tilt to the Side SIDE.
+        if (side == Side.NORTH) {
+            for (int j = 0; j < board.size(); j++) {
+                Tile t = board.tile(j, 0);
+                tiltColumn(j, t, side);
+            }
+        } else if (side == Side.EAST) {
+            for (int j = board.size() - 1; j > -1; j--) {
+                Tile t = board.tile(0, j);
+                tiltColumn(j, t, side);
+            }
+        } else if (side == Side.WEST) {
+            for (int j = 0; j< board.size(); j++) {
+                Tile t = board.tile(0,j);
+                tiltColumn(j,t, side);
+            }
+        }
+        else {
+            for(int j = board.size()-1;j >-1;j--){
+                Tile t = board.tile(j,0);
+                tiltColumn(j, t, side);
+            }
+        }
 
 
-        checkGameOver();
+
+            checkGameOver();
+        }
+
+
+    private int moveTileFarUpAsPossible(Tile t, int k){
+        if(t == null){
+            return k;
+        }
+        int col = t.col();
+        int row = t.row()+1;
+
+        for (int i=row; i<board.size(); i++){
+            if(board.tile(col,i)==null && i!=3){
+                continue;
+            }
+            else if(board.tile(col,i)==null&&i == 3){
+                board.move(col, i, t);
+                return 0;
+            }
+            else if(board.tile(col,i).value()==t.value()){
+                if(k == 0) {
+                    board.move(col, i, t);
+                    score += board.tile(col, i).value();
+                    return i;
+                }
+                else{
+                    board.move(col, i-1, t);
+                    return 0;
+                }
+            }
+            else if(board.tile(col,i) != null) {
+                board.move(col, i -1, t);
+                return 0;
+            }
+
+            System.out.println(i);
+        }
+        return 0;
+    }
+
+    private int moveTileFarUpAsPossibleEast(Tile t, int k) {
+        if (t == null) {
+            return k;
+        }
+        int col = t.col()+1;
+        int row = t.row() ; // 向上移動一格
+
+        for (int i = col; i < board.size(); i++) { // 在新視角下遍歷列
+            if (board.tile(i, row) == null && i != board.size() - 1) {
+                continue;
+            } else if (board.tile(i, row) == null && i == board.size() - 1) {
+                board.move(i, row, t);
+                return 0;
+            } else if (board.tile(i, row).value() == t.value()) {
+                if (k == 0) {
+                    board.move(i, row, t);
+                    score += board.tile(i, row).value();
+                    return i;
+                } else {
+                    board.move(i - 1, row, t);
+                    return 0;
+                }
+            } else if (board.tile(i, row) != null) {
+                board.move(i - 1, row, t);
+                return 0;
+            }
+        }
+        return 0;
+    }
+    private int moveTileFarUpAsPossibleSouth(Tile t, int k) {
+        if (t == null) {
+            return k;
+        }
+        int col = t.col();
+        int row = t.row() - 1; // 向下移動一格
+
+        for (int i = row; i >= 0; i--) { // 在新視角下向下遍歷行
+            if (board.tile(col, i) == null && i != 0) {
+                continue;
+            } else if (board.tile(col, i) == null && i == 0) {
+                board.move(col, i, t);
+                return 0;
+            } else if (board.tile(col, i).value() == t.value()) {
+                if (k == 0) {
+                    board.move(col, i, t);
+                    score += board.tile(col, i).value();
+                    return i+1;
+                } else {
+                    board.move(col, i + 1, t);
+                    return 0;
+                }
+            } else if (board.tile(col, i) != null) {
+                board.move(col, i + 1, t);
+                return 0;
+            }
+        }
+        return 0;
+    }
+    private int moveTileFarUpAsPossibleWest(Tile t, int k) {
+        if (t == null) {
+            return k;
+        }
+        int col = t.col();
+        int row = t.row();
+
+        for (int i = col - 1; i >= 0; i--) { // 在新视角下向左遍历列
+            if (board.tile(i, row) == null && i != 0) {
+                continue;
+            } else if (board.tile(i, row) == null && i == 0) {
+                board.move(i, row, t);
+                return 0;
+            } else if (board.tile(i, row).value() == t.value()) {
+                if (k == 0) {
+                    board.move(i, row, t);
+                    score += board.tile(i, row).value();
+                    return i+1;
+                } else {
+                    board.move(i + 1, row, t);
+                    return 0;
+                }
+            } else if (board.tile(i, row) != null) {
+                board.move(i + 1, row, t);
+                return 0;
+            }
+        }
+        return 0;
+    }
+
+
+    private void tiltColumn(int j,Tile t, Side side){
+        int k = 0;
+        if (side == Side.NORTH){
+            for(int i = board.size()-2; i >-1; i--) {
+                t = board.tile(j, i);
+                k = moveTileFarUpAsPossible(t, k);
+                System.out.println(board);
+
+            }
+        } else if (side == Side.EAST) {
+            for(int i = board.size()-2; i >-1; i--) {
+                t = board.tile(i, j);
+                k = moveTileFarUpAsPossibleEast(t, k);
+                System.out.println(board);
+
+            }
+        } else if (side == Side.WEST){
+            for(int i = 1; i < board.size();i++){
+                t = board.tile(i,j);
+                k = moveTileFarUpAsPossibleWest(t, k);
+                System.out.println(board);
+            }
+        } else {
+            for (int i=1; i< board.size();i++){
+                t = board.tile(j,i);
+                k = moveTileFarUpAsPossibleSouth(t,k);
+                System.out.println(board);
+            }
+        }
+
     }
 
 
