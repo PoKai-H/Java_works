@@ -1,4 +1,6 @@
+
 import jh61b.utils.Reflection;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ public class LinkedListDequeTest {
      }
 
      @Test
-     /** In this test, we have three different assert statements that verify that addFirst works correctly. */
+     /* In this test, we have three different assert statements that verify that addFirst works correctly. */
      public void addFirstTestBasic() {
          Deque<String> lld1 = new LinkedListDeque<>();
 
@@ -43,7 +45,7 @@ public class LinkedListDequeTest {
      }
 
      @Test
-     /** In this test, we use only one assertThat statement. IMO this test is just as good as addFirstTestBasic.
+     /* In this test, we use only one assertThat statement. IMO this test is just as good as addFirstTestBasic.
       *  In other words, the tedious work of adding the extra assertThat statements isn't worth it. */
      public void addLastTestBasic() {
          Deque<String> lld1 = new LinkedListDeque<>();
@@ -55,7 +57,7 @@ public class LinkedListDequeTest {
      }
 
      @Test
-     /** This test performs interspersed addFirst and addLast calls. */
+     /* This test performs interspersed addFirst and addLast calls. */
      public void addFirstAndAddLastTest() {
          Deque<Integer> lld1 = new LinkedListDeque<>();
 
@@ -176,6 +178,13 @@ public class LinkedListDequeTest {
     }
 
     @Test
+    public void getTestNegArgIntList(){
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+        lld1.addFirst(1);
+        assertThat(lld1.get(-1)).isEqualTo(null);
+    }
+
+    @Test
     public void getRecursiveTestValidArgIntList(){
         Deque<Integer> lld1 = new LinkedListDeque<>();
         lld1.addFirst(1);
@@ -205,6 +214,13 @@ public class LinkedListDequeTest {
         Deque<String> lld1 = new LinkedListDeque<>();
         lld1.addFirst("apple");
         assertThat(lld1.getRecursive(28723)).isEqualTo(null);
+    }
+
+    @Test
+    public void getRecursiveTestNegArgIntList(){
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+        lld1.addFirst(1);
+        assertThat(lld1.getRecursive(-2)).isEqualTo(null);
     }
 
     @Test
@@ -256,4 +272,113 @@ public class LinkedListDequeTest {
         assertThat(lld1.removeLast()).isEqualTo(null);
     }
 
+    @Test
+    public void removeFirstUntilEmpty() {
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+
+        lld1.addLast(0);
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld1.removeFirst();
+        lld1.removeFirst();
+
+        assertThat(lld1.removeFirst()).isEqualTo(2);
+    }
+
+    @Test
+    public void removeLastUntilEmpty() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+
+         lld1.addFirst(2);
+         lld1.addFirst(1);
+         lld1.addFirst(0);
+         lld1.removeLast();
+         lld1.removeLast();
+
+         assertThat(lld1.removeLast()).isEqualTo(0);
+    }
+
+    @Test
+    public void removeLastToOne() {
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+
+        lld1.addFirst(2);
+        lld1.addFirst(1);
+        lld1.addFirst(0);
+        lld1.removeLast();
+        lld1.removeLast();
+
+        assertThat(lld1.get(0)).isEqualTo(0);
+    }
+
+    @Test
+    public void removeFirstToOne() {
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+
+        lld1.addFirst(2);
+        lld1.addFirst(1);
+        lld1.addFirst(0);
+        lld1.removeFirst();
+        lld1.removeFirst();
+
+        assertThat(lld1.get(0)).isEqualTo(2);
+    }
+
+    @Test
+    public void addFirstRemoveFirst() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+
+         lld1.addFirst(0);
+
+         assertThat(lld1.removeFirst()).isEqualTo(0);
+    }
+
+    @Test
+    public void addFirstRemoveLast() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+
+         lld1.addFirst(0);
+
+         assertThat(lld1.removeLast()).isEqualTo(0);
+    }
+
+    @Test
+    public void addLastRemoveFirst() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+
+         lld1.addLast(0);
+
+         assertThat(lld1.removeFirst()).isEqualTo(0);
+    }
+
+    @Test
+    public void addLastRemoveLast() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+
+         lld1.addLast(0);
+
+         assertThat(lld1.removeLast()).isEqualTo(0);
+    }
+
+    @Test
+    public void addFirstAfterRemoveToEmpty() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+
+         lld1.addLast(0);
+         lld1.removeLast();
+         lld1.addFirst(1);
+
+         assertThat(lld1.get(0)).isEqualTo(1);
+    }
+
+    @Test
+    public void addLastAfterRemoveToEmpty() {
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+
+        lld1.addLast(0);
+        lld1.removeLast();
+        lld1.addLast(1);
+
+        assertThat(lld1.get(0)).isEqualTo(1);
+    }
 }
