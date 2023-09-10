@@ -353,6 +353,8 @@ public class LinkedListDequeTest {
     public void addLastRemoveFirst() {
          Deque<Integer> lld1 = new LinkedListDeque<>();
 
+         lld1.addLast(1);
+         lld1.removeFirst();
          lld1.addLast(0);
 
          assertThat(lld1.removeFirst()).isEqualTo(0);
