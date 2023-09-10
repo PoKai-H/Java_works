@@ -48,6 +48,9 @@ public class LinkedListDeque<T> implements Deque<T> {
         List<T> returnList = new ArrayList<>();
         StuffNode curr = sentinel;
         int temp = size;
+        if (temp == 0) {
+            return returnList;
+        }
         while (temp > 0) {
             returnList.add(curr.next.item);
             curr = curr.next;
@@ -58,7 +61,7 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     @Override
     public boolean isEmpty() {
-        return sentinel.next.item == null;
+        return size == 0;
     }
 
     @Override
@@ -114,7 +117,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     private T getRecursiveHelper(int index, StuffNode curr) {
-        if(index == 0) {
+        if (index == 0) {
             return curr.item;
         }
         return getRecursiveHelper(index - 1, curr.next);

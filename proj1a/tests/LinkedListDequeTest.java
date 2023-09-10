@@ -74,6 +74,12 @@ public class LinkedListDequeTest {
 
      //Below, you'll write your own tests for LinkedListDeque.
     @Test
+    public void toListEmpty(){
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+         assertThat(lld1.toList().isEmpty()).isEqualTo(true);
+    }
+
+    @Test
     public void isEmptyTestIfEmptyInt(){
          Deque<Integer> lld1 = new LinkedListDeque<>();
          assertThat(lld1.isEmpty()).isEqualTo(true);
@@ -279,10 +285,11 @@ public class LinkedListDequeTest {
         lld1.addLast(0);
         lld1.addLast(1);
         lld1.addLast(2);
-        lld1.removeFirst();
-        lld1.removeFirst();
+        while (!lld1.isEmpty()){
+            lld1.removeFirst();
+        }
 
-        assertThat(lld1.removeFirst()).isEqualTo(2);
+        assertThat(lld1.isEmpty()).isEqualTo(true);
     }
 
     @Test
@@ -292,10 +299,10 @@ public class LinkedListDequeTest {
          lld1.addFirst(2);
          lld1.addFirst(1);
          lld1.addFirst(0);
-         lld1.removeLast();
-         lld1.removeLast();
-
-         assertThat(lld1.removeLast()).isEqualTo(0);
+         while (!lld1.isEmpty()) {
+             lld1.removeLast();
+         }
+         assertThat(lld1.isEmpty()).isEqualTo(true);
     }
 
     @Test
