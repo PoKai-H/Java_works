@@ -74,11 +74,12 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (size == 0) {
             return null;
         }
-        StuffNode removeNode = sentinel.next;
-        sentinel.next = removeNode.next;
-        sentinel.next.prev = sentinel;
         size--;
-        return removeNode.item;
+        T removeNode = sentinel.next.item;
+        sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
+
+        return removeNode;
     }
 
     @Override
@@ -86,11 +87,11 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (size == 0) {
             return null;
         }
-        StuffNode removeNode = sentinel.prev;
-        sentinel.prev = removeNode.prev;
-        sentinel.prev.next = sentinel;
         size--;
-        return removeNode.item;
+        T removeNode = sentinel.prev.item;
+        sentinel.prev.prev.next = sentinel;
+        sentinel.prev = sentinel.prev.prev;
+        return removeNode;
     }
 
     @Override
