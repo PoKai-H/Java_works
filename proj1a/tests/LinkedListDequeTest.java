@@ -416,10 +416,9 @@ public class LinkedListDequeTest {
     @Test
     public void randomizedTest() {
         LinkedListDeque<Integer> linkedListDeque = new LinkedListDeque<>();
-
         int N = 1000000;
         for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 6);
+            int operationNumber = StdRandom.uniform(0, 8);
             if (operationNumber == 0) {
                 int randVal = StdRandom.uniform(0, 100);
                 linkedListDeque.addFirst(randVal);
