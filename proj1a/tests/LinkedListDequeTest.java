@@ -390,4 +390,25 @@ public class LinkedListDequeTest {
 
         assertThat(lld1.get(0)).isEqualTo(1);
     }
+
+    @Test
+    public void addLastRemoveFirstMul(){
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+         lld1.addLast(0);
+         lld1.removeFirst();
+         lld1.addLast(1);
+         lld1.removeFirst();
+         lld1.addLast(2);
+         lld1.addLast(3);
+         lld1.removeFirst();
+         lld1.addLast(4);
+         lld1.addLast(5);
+         lld1.removeFirst();
+         lld1.removeFirst();
+         lld1.addLast(6);
+         lld1.addLast(7);
+         lld1.removeFirst();
+
+         assertThat(lld1.removeFirst()).isEqualTo(6);
+    }
 }
