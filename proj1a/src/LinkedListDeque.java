@@ -74,45 +74,37 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        StuffNode rmNode = sentinel.next;
-        T rmItem = rmNode.item;
-        sentinel.next = rmNode.next;
-        rmNode.next.prev = sentinel;
-        rmNode.item = null;
-        rmNode.next = null;
-        rmNode.prev = null;
-        size = size - 1;
-        return rmItem;
+        size -= 1;
+        T res = sentinel.next.item;
+        sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
+        return res;
     }
+
 
     public T removeLast() {
         if (isEmpty()) {
             return null;
         }
-        StuffNode rmNode = sentinel.prev;
-        T rmItem = rmNode.item;
-        sentinel.prev = rmNode.prev;
-        rmNode.prev.next = sentinel;
-        rmNode.item = null;
-        rmNode.prev = null;
-        rmNode.next = null;
-        size = size - 1;
-        return rmItem;
+        size -= 1;
+        T res = sentinel.prev.item;
+        sentinel.prev.prev.next = sentinel;
+        sentinel.prev = sentinel.prev.prev;
+        return res;
     }
 
     @Override
     public T get(int index) {
-        int i = 0;
-        StuffNode curr = sentinel.next;
-        if (index >= size || index < 0) {
-            return null;
-        } else {
-            while (i < index) {
-                curr = curr.next;
-                i += 1;
+        int count = 0;
+        StuffNode curr = sentinel;
+        while(curr.next != sentinel) {
+            curr = curr.next;
+            if(count == index) {
+                return curr.item;
             }
-            return curr.item;
+            count ++;
         }
+        return null;
     }
 
     @Override

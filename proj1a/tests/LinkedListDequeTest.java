@@ -1,4 +1,5 @@
 
+import edu.princeton.cs.algs4.StdRandom;
 import jh61b.utils.Reflection;
 
 import org.junit.jupiter.api.DisplayName;
@@ -410,5 +411,33 @@ public class LinkedListDequeTest {
          lld1.removeFirst();
 
          assertThat(lld1.removeFirst()).isEqualTo(6);
+    }
+
+    @Test
+    public void randomizedTest() {
+        LinkedListDeque<Integer> linkedListDeque = new LinkedListDeque<>();
+
+        int N = 1000000;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 6);
+            if (operationNumber == 0) {
+                int randVal = StdRandom.uniform(0, 100);
+                linkedListDeque.addFirst(randVal);
+            } else if (operationNumber == 1) {
+                int randVal = StdRandom.uniform(0, 100);
+                linkedListDeque.addLast(randVal);
+            } else if (linkedListDeque.isEmpty()) {
+                assertThat(linkedListDeque.isEmpty()).isEqualTo(true);
+            } else if (operationNumber == 2) {
+                assertThat(linkedListDeque.isEmpty()).isEqualTo(false);
+            } else if (operationNumber == 3) {
+                linkedListDeque.removeFirst();
+            } else if (operationNumber == 4) {
+                linkedListDeque.removeLast();
+            } else if (operationNumber == 5) {
+                int randIndex = StdRandom.uniform(0, linkedListDeque.size());
+                linkedListDeque.get(randIndex);
+            }
+        }
     }
 }
