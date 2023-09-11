@@ -439,4 +439,18 @@ public class LinkedListDequeTest {
             }
         }
     }
+
+    @Test
+    public void nextPrevTest() {
+         Deque<Integer> lld1 = new LinkedListDeque<>();
+         lld1.addFirst(0);
+         lld1.addFirst(1);
+         lld1.removeFirst();
+         lld1.addLast(1);
+         lld1.addLast(2);
+         lld1.addLast(3);
+         lld1.removeFirst();
+
+         assertThat(lld1.toList()).containsExactly(1,2,3).inOrder();
+    }
 }
