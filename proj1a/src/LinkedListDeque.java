@@ -16,7 +16,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         }
     }
     public LinkedListDeque() {
-        sentinel = new StuffNode(null,null,null);
+        sentinel = new StuffNode(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
@@ -26,7 +26,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     public void addFirst(T x) {
         sentinel.next = new StuffNode(sentinel, x, sentinel.next);
         sentinel.next.next.prev = sentinel.next;
-        size ++;
+        size++;
 
     }
 
@@ -34,7 +34,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     public void addLast(T x) {
         sentinel.prev = new StuffNode(sentinel.prev, x, sentinel);
         sentinel.prev.prev.next = sentinel.prev;
-        size ++;
+        size++;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         StuffNode temp = sentinel.next;
         sentinel.next.next.prev = sentinel;
         sentinel.next = sentinel.next.next;
-        size --;
+        size--;
         return temp.item;
     }
 
@@ -83,7 +83,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         StuffNode temp = sentinel.prev;
         sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
-        size --;
+        size--;
         return temp.item;
     }
 
@@ -91,12 +91,12 @@ public class LinkedListDeque<T> implements Deque<T> {
     public T get(int index) {
         int count = 0;
         StuffNode curr = sentinel;
-        while(curr.next != sentinel) {
+        while (curr.next != sentinel) {
             curr = curr.next;
-            if(count == index) {
+            if (count == index) {
                 return curr.item;
             }
-            count ++;
+            count++;
         }
         return null;
     }
