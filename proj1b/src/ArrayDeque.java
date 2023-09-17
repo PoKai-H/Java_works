@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private int size;
     private T[] items;
     private int nextFirst;
@@ -15,9 +15,9 @@ public class ArrayDeque<T> implements Deque<T>{
     }
     private void resizeUp(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
-        for (int i = 0; i < items.length; i++){
+        for (int i = 0; i < items.length; i++) {
             newArray[i] = items[(nextFirst + 1) % items.length];
-            nextFirst = (nextFirst+1) % items.length;
+            nextFirst = (nextFirst + 1) % items.length;
         }
         items = newArray;
         nextLast = size;
@@ -28,10 +28,10 @@ public class ArrayDeque<T> implements Deque<T>{
         if (size == items.length) {
             resizeUp(size * 2);
         }
-        size ++;
+        size++;
         items[nextFirst] = x;
         nextFirst -= 1;
-        if(nextFirst < 0) {
+        if (nextFirst < 0) {
             nextFirst = items.length - 1;
         }
 
@@ -42,10 +42,10 @@ public class ArrayDeque<T> implements Deque<T>{
         if (size == items.length) {
             resizeUp(size * 2);
         }
-        size ++;
+        size++;
         items[nextLast] = x;
         nextLast += 1;
-        if(nextLast > items.length - 1) {
+        if (nextLast > items.length - 1) {
             nextLast = 0;
         }
 
@@ -78,7 +78,7 @@ public class ArrayDeque<T> implements Deque<T>{
     private void resizeDown(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
         int firstPos = Math.abs(capacity - size) / 2;
-        for(int i = 0; i <  size; i++) {
+        for (int i = 0; i <  size; i++) {
             newArray[firstPos + i] = items[(nextFirst + i + 1) % items.length];
         }
         items = newArray;
@@ -90,7 +90,7 @@ public class ArrayDeque<T> implements Deque<T>{
         if (isEmpty()) {
             return null;
         }
-        if (size - 1 <= items.length / 4 && items.length > 15) {
+        if (size - 1 <= items.length / 4 && items.length > startSize * 2 - 1) {
             resizeDown(items.length / 2);
         }
         nextFirst  = (nextFirst + 1) % items.length;
@@ -105,7 +105,7 @@ public class ArrayDeque<T> implements Deque<T>{
         if (isEmpty()) {
             return null;
         }
-        if (size - 1 < items.length / 4 && items.length > 15) {
+        if (size - 1 < items.length / 4 && items.length > startSize * 2 - 1) {
             resizeDown(items.length / 2);
         }
         if (nextLast == 0) {

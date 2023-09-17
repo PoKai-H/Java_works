@@ -405,6 +405,20 @@ public class ArrayDequeTest {
 
         assertThat(ad1.removeFirst()).isEqualTo(6);
     }
+
+    @Test
+    public void sizeRemoveToEmpty() {
+         Deque<Integer> ad1 = new ArrayDeque<>();
+         ad1.addFirst(1);
+         ad1.removeFirst();
+         assertThat(ad1.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void toListEmpty() {
+         Deque<Integer> ad1 = new ArrayDeque<>();
+         assertThat(ad1.toList().isEmpty()).isEqualTo(true);
+    }
     @Test
     public void randomizedTest() {
         Deque<Integer> ad1 = new ArrayDeque<>();
