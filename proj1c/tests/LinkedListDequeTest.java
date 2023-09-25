@@ -27,6 +27,34 @@ public class LinkedListDequeTest {
         ad1.addLast("back");
         assertThat(lld1).isEqualTo(ad1);
     }
+    @Test
+    public void testEqualsVsEqEq() {
+        Deque<String> lld1 = new LinkedListDeque<>();
+        Deque<String> lld2 = new LinkedListDeque<>();
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        lld2.addFirst("back");
+        lld2.addFirst("middle");
+        lld2.addFirst("front");
+        assertThat(lld1 == lld2).isEqualTo(false);
+        assertThat(lld1).isEqualTo(lld2);
+
+    }
+    @Test
+    public void LinkedListDequeEquals() {
+        Deque<String> lld1 = new LinkedListDeque<>();
+        Deque<String> lld2 = new LinkedListDeque<>();
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        lld2.addFirst("back");
+        lld2.addFirst("middle");
+        lld2.addFirst("front");
+
+        assertThat(lld1).isEqualTo(lld2);
+
+    }
 
     @Test
     public void iterableTest() {
