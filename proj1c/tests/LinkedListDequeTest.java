@@ -42,6 +42,18 @@ public class LinkedListDequeTest {
 
     }
     @Test
+    public void testEqualvsEqEq2() {
+        Deque<Integer> lld1 = new LinkedListDeque<>();
+        Deque<Integer> lld2 = new LinkedListDeque<>();
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld1.addLast(3);
+        lld2.addLast(1);
+        lld2.addLast(2);
+        lld2.addLast(3);
+        assertThat(lld1).isEqualTo(lld2);
+    }
+    @Test
     public void LinkedListDequeEquals() {
         Deque<String> lld1 = new LinkedListDeque<>();
         Deque<String> lld2 = new LinkedListDeque<>();
