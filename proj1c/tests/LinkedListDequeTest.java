@@ -2,6 +2,7 @@
 import deque.Deque;
 
 import deque.LinkedListDeque;
+import deque.ArrayDeque;
 import edu.princeton.cs.algs4.StdRandom;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,19 @@ import static com.google.common.truth.Truth.assertThat;
 
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
+
+    @Test
+    public void arrayDequeCanBeLinkedListDeque() {
+        Deque<String> lld1 = new LinkedListDeque<>();
+        Deque<String> ad1 = new ArrayDeque<>();
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        ad1.addLast("front");
+        ad1.addLast("middle");
+        ad1.addLast("back");
+        assertThat(lld1).isEqualTo(ad1);
+    }
 
     @Test
     public void iterableTest() {

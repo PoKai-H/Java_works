@@ -172,7 +172,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (o == this) {
             return true;
         }
-        if (o instanceof ArrayDeque otherDeque) {
+        if (o instanceof Deque otherDeque) {
             if (otherDeque.size() != size) {
                 return false;
             }

@@ -28,7 +28,18 @@ public class ArrayDequeTest {
 
         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
     }
-
+    @Test
+    public void arrayDequeCanBeLinkedListDeque() {
+        Deque<String> lld1 = new LinkedListDeque<>();
+        Deque<String> ad1 = new ArrayDeque<>();
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        ad1.addLast("front");
+        ad1.addLast("middle");
+        ad1.addLast("back");
+        assertThat(ad1).isEqualTo(lld1);
+    }
     @Test
     public void printDeque() {
         Deque<String> lld1 = new LinkedListDeque<>();
