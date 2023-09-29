@@ -57,26 +57,10 @@ public class UnionFind {
         if (data[v] < 0) {
             return v;
         }
-        if (v < data.length) {
-            int par = parent(v);
-            int prev = 0;
-            int [] path = new int[data.length];
-            int i = 0;
-            path[i] = v;
-            while (par > 0) {
-                i += 1;
-                path[i] = par;
-                prev = par;
-                par = parent(par);
-            }
-            if (i > 0) {
-                for (int j : path) {
-                    path[j] = prev;
-                }
-            }
-            return prev;
+        else {
+            data[v] = find(data[v]);
+            return data[v];
         }
-        return 0;
     }
 
 
