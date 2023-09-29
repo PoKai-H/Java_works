@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class UnionFind {
     /**
      * DO NOT DELETE OR MODIFY THIS, OTHERWISE THE TESTS WILL NOT PASS.
@@ -10,24 +12,13 @@ public class UnionFind {
        items are in disjoint sets. */
     public UnionFind(int N) {
         data = new int [N];
-        for (int i = 0; i < data.length; i++) {
-            data[i] = -1;
-        }
+        Arrays.fill(data, -1);
 
     }
 
     /* Returns the size of the set V belongs to. */
     public int sizeOf(int v) {
-        if (v > -1) {
-            int index = v;
-            while (data[index] > 0) {
-                index = data[index];
-            }
-            return data[index];
-        }
-        else {
-            return v;
-        }
+        return Math.abs(data[find(v)]);
     }
 
 
@@ -38,7 +29,7 @@ public class UnionFind {
             return data[v];
         }
         else {
-            return Math.abs(sizeOf(v));
+            return sizeOf(v);
         }
     }
 
@@ -72,15 +63,15 @@ public class UnionFind {
     public void union(int v1, int v2) {
         if (v1 < data.length && v2 < data.length) {
             if (v1 != v2 && !connected(v1, v2)) {
-                int size1 = sizeOf(v1);
-                int size2 = sizeOf(v2);
-                if (size1 < size2) {
-                    data[find(v2)] = find(v1);
-                    data[find(v1)] = sizeOf(v2) + sizeOf(v1);
+                int root1 = find(v1);
+                int root2 = find(v2);
+                if (sizeOf(v1) > sizeOf(v2)) {
+                    data[root1] += data[root2];
+                    data[root2] = root1;
                 }
                 else {
-                    data[find(v1)] = find(v2);
-                    data[find(v2)] = sizeOf(v1) + sizeOf(v2);
+                    data[root2] += data[root1];
+                    data[root1] = root2;
                 }
             }
         }
