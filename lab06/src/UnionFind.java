@@ -38,7 +38,7 @@ public class UnionFind {
             return data[v];
         }
         else {
-            return -sizeOf(v);
+            return Math.abs(sizeOf(v));
         }
     }
 
@@ -72,8 +72,8 @@ public class UnionFind {
     public void union(int v1, int v2) {
         if (v1 < data.length && v2 < data.length) {
             if (v1 != v2 && !connected(v1, v2)) {
-                int size1 = data[find(v1)];
-                int size2 = data[find(v2)];
+                int size1 = sizeOf(v1);
+                int size2 = sizeOf(v2);
                 if (size1 < size2) {
                     data[find(v2)] = find(v1);
                     data[find(v1)] = sizeOf(v2) + sizeOf(v1);
