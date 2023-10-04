@@ -5,7 +5,7 @@ public class Percolation {
     private boolean[][] grid;
     private int openSites;
     private WeightedQuickUnionUF UF;
-    private WeightedQuickUnionUF UFwithoutBackWash;
+    private WeightedQuickUnionUF ufWithoutBackWash;
     private int N;
     private  int virtualTop;
     private  int virtualBottom;
@@ -18,7 +18,7 @@ public class Percolation {
         this.openSites = 0;
         this.N = N;
         UF = new WeightedQuickUnionUF(N * N + 2);  // n*n grid with virtual top site and virtual bottom site
-        UFwithoutBackWash = new WeightedQuickUnionUF(N * N + 2);
+        ufWithoutBackWash = new WeightedQuickUnionUF(N * N + 2);
         this.virtualTop = N * N;
         this.virtualBottom = N * N + 1;
 
@@ -48,15 +48,15 @@ public class Percolation {
             }
             if (mx == -1) {
                 UF.union(xyTo1D(row, col), virtualTop);
-                UFwithoutBackWash.union(xyTo1D(row, col), virtualTop);
+                ufWithoutBackWash.union(xyTo1D(row, col), virtualTop);
                 continue;
             } else if (mx == N) {
                 UF.union(xyTo1D(row, col), virtualBottom);
                 continue;
             }
-            if (isOpen(mx, my) && !UFwithoutBackWash.connected(xyTo1D(row, col), xyTo1D(mx, my))) {
+            if (isOpen(mx, my) && !ufWithoutBackWash.connected(xyTo1D(row, col), xyTo1D(mx, my))) {
                 UF.union(xyTo1D(row, col), xyTo1D(mx, my));
-                UFwithoutBackWash.union(xyTo1D(row, col), xyTo1D(mx, my));
+                ufWithoutBackWash.union(xyTo1D(row, col), xyTo1D(mx, my));
             }
         }
     }
@@ -68,7 +68,7 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         validateIndex(row, col);
-        return UFwithoutBackWash.connected(xyTo1D(row, col), N * N);
+        return ufWithoutBackWash.connected(xyTo1D(row, col), N * N);
     }
 
     public int numberOfOpenSites() {
@@ -81,7 +81,7 @@ public class Percolation {
 
     private void validateIndex(int row, int col) {
         if (row < 0 || row > N || col < 0 || col > N) {
-            throw new java.lang.IllegalArgumentException("row and col need to be >= 0 and <= N-1");
+            throw new java.lang.IndexOutOfBoundsException("row and col need to be >= 0 and <= N-1");
         }
     }
 

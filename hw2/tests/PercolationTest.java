@@ -42,7 +42,24 @@ public class PercolationTest {
 
     @Test
     public void yourTestHere() {
-        // TODO: write some more tests
+        int N = 5;
+        Percolation p = new Percolation(5);
+        int[][] openSites = {
+                {0, 1},
+                {2, 0},
+                {3, 1},
+                {4, 1},
+                {1, 0},
+                {1, 1}
+        };
+        int[][] expectedState = {
+                {0, 3, 0, 0, 0},
+                {3, 3, 0, 0, 0},
+                {3, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0},
+                {0, 1, 0, 0, 0}
+        };
+        p.open(-1, 5);
     }
 
 }
