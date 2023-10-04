@@ -43,7 +43,7 @@ public class Percolation {
         for (int i = 0; i < 4; i++) {
             int mx = row + next[i][0];
             int my = col + next[i][1];
-            if (my < 0 || my > N-1) {
+            if (my < 0 || my > N - 1) {
                 continue;
             }
             if (mx == -1) {
@@ -54,7 +54,7 @@ public class Percolation {
                 UF.union(xyTo1D(row, col), virtualBottom);
                 continue;
             }
-            if (isOpen(mx, my) && !UF.connected(xyTo1D(row, col), xyTo1D(mx, my))) {
+            if (isOpen(mx, my) && !UFwithoutBackWash.connected(xyTo1D(row, col), xyTo1D(mx, my))) {
                 UF.union(xyTo1D(row, col), xyTo1D(mx, my));
                 UFwithoutBackWash.union(xyTo1D(row, col), xyTo1D(mx, my));
             }
@@ -81,7 +81,7 @@ public class Percolation {
 
     private void validateIndex(int row, int col) {
         if (row < 0 || row > N || col < 0 || col > N) {
-            throw new java.lang.IllegalArgumentException("row and col need to be > 0 and < N-1");
+            throw new java.lang.IllegalArgumentException("row and col need to be >= 0 and <= N-1");
         }
     }
 
