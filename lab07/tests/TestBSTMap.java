@@ -90,6 +90,7 @@ public class TestBSTMap {
         BSTMap<String, Integer> b = new BSTMap<>();
         b.put("hi", null);
         assertThat(b.get("hi")).isNull();
+        System.out.println(b.containsKey("hi"));
         assertThat(b.containsKey("hi")).isTrue();
     }
 
@@ -112,6 +113,17 @@ public class TestBSTMap {
         b.put("b", "provolone");
         assertThat(b.size()).isEqualTo(5);
         assertThat(b.get("b")).isEqualTo("provolone");
+    }
+
+    @Test
+    public void printInOrderTest() {
+        BSTMap<String, String> b = new BSTMap<>();
+        b.put("d", "parmesan");
+        b.put("a", "mozzarella");
+        b.put("c", "swiss");
+        b.put("b", "pepper jack");
+        b.put("e", "gouda");
+        b.printInOrder();
     }
 
 }
