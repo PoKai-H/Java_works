@@ -1,6 +1,7 @@
 import ngrams.NGramMap;
 import ngrams.TimeSeries;
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -71,5 +72,24 @@ public class NGramMapTest {
         double expectedFishPlusDogWeight1865 = (136497.0 + 75819.0) / 2563919231.0;
         assertThat(fishPlusDogWeight.get(1865)).isWithin(1E-10).of(expectedFishPlusDogWeight1865);
     }
+    @Test
+    public void veryShortCsvTest() {
+        NGramMap ngm = new NGramMap("./data/ngrams/very_short.csv", "./data/ngrams/total_counts.csv");
+        TimeSeries totalCounts = ngm.totalCountHistory();
+        assertThat(totalCounts.get(1865)).isWithin(1E-10).of(2563919231.0);
 
-}  
+        TimeSeries airportWeight = ngm.weightHistory("airport", 2006, 2008);
+        assertThat(airportWeight.get(2007)).isWithin(1E-7).of(175702.0/28307904288.0);
+
+        TimeSeries requestCount = ngm.countHistory("request", 2005, 2008);
+        assertThat(requestCount.get(2007)).isWithin(1E-10).of(697645.0);
+
+        List<String> airportAndRequest = new ArrayList<>();
+        airportAndRequest.add("airport");
+        airportAndRequest.add("request");
+        TimeSeries expectedAirportPlusRequest = ngm.summedWeightHistory(airportAndRequest, 2006, 2008);
+        double expectedAirportPlusRequest2007 = (175702.0 + 697645.0) / 28307904288.0;
+        assertThat(expectedAirportPlusRequest.get(2007)).isWithin(1E-10).of(expectedAirportPlusRequest2007);
+    }
+}
+

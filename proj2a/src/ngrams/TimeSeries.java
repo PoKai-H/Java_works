@@ -1,6 +1,8 @@
 package ngrams;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -27,15 +29,23 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
+        if (ts == null) {
+            return ;
+        } else {
+            for (Integer i: ts.keySet()) {
+                if (i >= startYear && i <= endYear) {
+                    put(i, ts.get(i));
+                }
+            }
+        }
     }
 
     /**
      * Returns all years for this TimeSeries (in any order).
      */
     public List<Integer> years() {
-        // TODO: Fill in this method.
-        return null;
+        List<Integer> yearsList = new ArrayList<>(keySet());
+        return yearsList;
     }
 
     /**
@@ -43,8 +53,12 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * Must be in the same order as years().
      */
     public List<Double> data() {
-        // TODO: Fill in this method.
-        return null;
+        List<Double> dataList = new ArrayList<>();
+        List<Integer> yearsList = new ArrayList<>(keySet());
+        for (Integer integer : yearsList) {
+            dataList.add(get(integer));
+        }
+        return dataList;
     }
 
     /**
@@ -57,8 +71,23 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * should store the value from the TimeSeries that contains that year.
      */
     public TimeSeries plus(TimeSeries ts) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries tsCopy = new TimeSeries();
+        if (isEmpty() && ts.isEmpty()) {
+            return tsCopy;
+        }
+        for(Integer integer : keySet()) {
+            if (!ts.containsKey(integer)) {
+                tsCopy.put(integer, get(integer));
+            } else {
+                tsCopy.put(integer, get(integer) + ts.get(integer));
+            }
+        }
+        for (Integer integer: ts.keySet()) {
+            if (!containsKey(integer)) {
+                tsCopy.put(integer, ts.get(integer));
+            }
+        }
+        return tsCopy;
     }
 
     /**
@@ -71,8 +100,18 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * If TS has a year that is not in this TimeSeries, ignore it.
      */
     public TimeSeries dividedBy(TimeSeries ts) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries tsCopy = new TimeSeries();
+        if (isEmpty() && ts.isEmpty()) {
+            return tsCopy;
+        }
+        for (Integer integer: keySet()) {
+            if (!ts.containsKey(integer)) {
+                throw new IllegalArgumentException();
+            } else {
+                tsCopy.put(integer, get(integer) / ts.get(integer));
+            }
+        }
+        return tsCopy;
     }
 
     // TODO: Add any private helper methods.
