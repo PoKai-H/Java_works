@@ -21,15 +21,13 @@ public class HistoryHandler extends NgordnetQueryHandler {
         List<String> words = q.words();
         int startYear = q.startYear();
         int endYear = q.endYear();
-        List<String> labels = new ArrayList<>();
         List<TimeSeries> lts = new ArrayList<>();
-        for(String word: words) {
-            labels.add(word);
+        for (String word: words) {
             lts.add(map.weightHistory(word, startYear, endYear));
             }
 
 
-        XYChart chart = Plotter.generateTimeSeriesChart(labels, lts);
+        XYChart chart = Plotter.generateTimeSeriesChart(words, lts);
         String encodedImage = Plotter.encodeChartAsString(chart);
         return encodedImage;
     }

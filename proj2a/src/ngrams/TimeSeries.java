@@ -2,7 +2,6 @@ package ngrams;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -30,7 +29,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
         if (ts == null) {
-            return ;
+            return;
         } else {
             for (Integer i: ts.keySet()) {
                 if (i >= startYear && i <= endYear) {
@@ -75,7 +74,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         if (isEmpty() && ts.isEmpty()) {
             return tsCopy;
         }
-        for(Integer integer : keySet()) {
+        for (Integer integer : keySet()) {
             if (!ts.containsKey(integer)) {
                 tsCopy.put(integer, get(integer));
             } else {
@@ -114,6 +113,4 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         return tsCopy;
     }
 
-    // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
 }
