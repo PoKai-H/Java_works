@@ -62,23 +62,54 @@ public class RedBlackTree<T extends Comparable<T>> {
     /* Flips the color of node and its children. Assume that NODE has both left
        and right children. */
     void flipColors(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
+        if (!isRed(node) && isRed(node.right) || isRed(node.left)) {
+            node.isBlack = false;
+            if (node.left != null) {
+                node.left.isBlack = true;
+            }
+            if (node.right != null) {
+                node.right.isBlack = true;
+            }
+        } else {
+            if (node.left != null) {
+                node.left.isBlack = false;
+            }
+            if (node.right != null) {
+                node.right.isBlack = false;
+            }
+            node.isBlack = true;
+        }
     }
 
     /* Rotates the given node to the right. Returns the new root node of
        this subtree. For this implementation, make sure to swap the colors
        of the new root and the old root!*/
     RBTreeNode<T> rotateRight(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
-        return null;
+        RBTreeNode<T> tmpNode = node.left;
+        if (node.left.right != null) {
+            node.left = node.left.right;
+        } else {
+            node.left = null;
+        }
+        tmpNode.right = node;
+        flipColors(tmpNode);
+        return tmpNode;
     }
 
     /* Rotates the given node to the left. Returns the new root node of
        this subtree. For this implementation, make sure to swap the colors
        of the new root and the old root! */
     RBTreeNode<T> rotateLeft(RBTreeNode<T> node) {
-        // TODO: YOUR CODE HERE
-        return null;
+        RBTreeNode<T> tmpNode = node.right;
+        if (node.right.left != null) {
+            node.right = node.right.left;
+        } else {
+            node.right = null;
+        }
+        tmpNode.left = node;
+        tmpNode.isBlack = tmpNode.left.isBlack;
+        tmpNode.left.isBlack = false;
+        return tmpNode;
     }
 
     public void insert(T item) {
@@ -105,7 +136,19 @@ public class RedBlackTree<T extends Comparable<T>> {
             node.right = insert(node.right, item);
         }
 
-        // TODO: YOUR CODE HERE
+        if (isRed(node.left) && isRed(node.right)) {
+            flipColors(node);
+        }
+        if (isRed(node.left) && isRed(node.left.left)) {
+            node = rotateRight(node);
+        }
+        if (isRed(node.right)) {
+            node = rotateLeft(node);
+        }
+
+
+
+
 
         // Rotate left operation
 
@@ -113,7 +156,7 @@ public class RedBlackTree<T extends Comparable<T>> {
 
         // Color flip
 
-        return null; //fix this return statement
+        return node; //fix this return statement
     }
 
     /* Returns whether the given node is red. Null nodes (children of leaf
