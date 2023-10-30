@@ -1,0 +1,15 @@
+[InsertRandomSpeedTest]
+Enter # strings to insert into ULLMap: 10000000
+ULLMap: 0.83 sec
+
+Enter # strings to insert into your MyHashMap: 10000000
+MyHashMap: 0.21 sec
+
+Enter # strings to insert into Java's HashMap: 10000000
+Java's Built-in HashMap: 0.17 sec
+
+MyhashMap is a bit slower than Java's built-in HashMap,
+which may cause by using linked-list for the buckets while java's built-in HashMap had transits to using red-black trees for buckets.
+
+When we don't care about the order of entries, HashMap has a better average time complexity.
+Especially useful for tasks like counting, caching, or scenarios where insertion, deletions and lookups are random.

@@ -315,4 +315,13 @@ public class TestMyHashMap {
             return false;
         }
     }
+
+    @Test
+    public void testLoadFactor() {
+        MyHashMap<String, Integer> m = new MyHashMap<>();
+        for (int i = 0; i < 100; i++) {
+            m.put("hi", i);
+            System.out.println(m.size());
+        }
+    }
 }
