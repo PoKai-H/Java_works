@@ -90,5 +90,4 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             }
         }
     }
-
 }
