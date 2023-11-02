@@ -56,7 +56,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 for (int i = 0; i < k; i = i + 1) {
                     Double popularKey = maxPQ.poll();
                     if (popularKey != 0.0) {
-                        for(String hy: hyponymsMap.keySet()) {
+                        for (String hy: hyponymsMap.keySet()) {
                             if (hyponymsMap.get(hy) == popularKey) {
                                 mostPopular.add(hy);
                             }
@@ -74,7 +74,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 for (int i = 0; i < hyps.size(); i = i + 1) {
                     Double popularKey = maxPQ.poll();
                     if (popularKey != 0.0) {
-                        for(String hy: hyponymsMap.keySet()) {
+                        for (String hy: hyponymsMap.keySet()) {
                             if (hyponymsMap.get(hy) == popularKey) {
                                 mostPopular.add(hy);
                             }
@@ -90,4 +90,5 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             }
         }
     }
+
 }
