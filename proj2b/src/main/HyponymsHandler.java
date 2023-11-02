@@ -3,6 +3,8 @@ package main;
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 import ngrams.NGramMap;
+import ngrams.TimeSeries;
+
 import java.util.*;
 
 public class HyponymsHandler extends NgordnetQueryHandler {
@@ -18,11 +20,14 @@ public class HyponymsHandler extends NgordnetQueryHandler {
     @Override
     public String handle(NgordnetQuery q) {
         List<String> words = q.words();
+        int startYear = q.startYear();
+        int endYear = q.endYear();
+        int k = q.k();
         if (words.isEmpty()) {
             return "[]";
         }
 
-        HashSet<String> hyps = ngrams.hyponyms(words.get(0));
+        TreeSet<String> hyps = ngrams.hyponyms(words.get(0));
         if (hyps.isEmpty()) {
             return "[]";
         }
@@ -31,29 +36,51 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             hyps.retainAll(ngrams.hyponyms(word));
         }
 
-        List<String> hypsList = new ArrayList<>(hyps);
+        if (k == 0) {
+            return hyps.toString();
+        } else {
+            Map<Double, String> hyponymsMap = new HashMap<>();
+            PriorityQueue<Double> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
 
-        if (q.k() != 0) {
-            HashMap<String, Double> hypCounts = new HashMap<>();
-
-            for (String word : hyps) {
-                List<Double> history = gramMap.countHistory(word, q.startYear(), q.endYear()).data();
-                double count = history.stream().mapToDouble(Double::doubleValue).sum();
-
-                if (count == 0) {
-                    hypsList.remove(word);
-                } else {
-                    hypCounts.put(word, count);
+            for (String hyponym : hyps) {
+                TimeSeries hyponymTs = gramMap.countHistory(hyponym, startYear, endYear);
+                Collection<Double> aLs =  hyponymTs.values();
+                Double sum = (double) 0;
+                for (Double al : aLs) {
+                    sum = sum + al;
                 }
+                hyponymsMap.put(sum, hyponym);
+                maxPQ.add(sum);
             }
+            TreeSet<String> mostPopular = new TreeSet<>();
+            if (k <= hyps.size()) {
+                for (int i = 0; i < k; i = i + 1) {
+                    Double popularKey = maxPQ.poll();
+                    if (popularKey != 0.0) {
+                        mostPopular.add(hyponymsMap.get(popularKey));
+                    } else {
+                        break;
+                    }
 
-            if (q.k() < hypsList.size()) {
-                hypsList.sort(Comparator.comparingDouble(hypCounts::get).reversed());
-                hypsList = hypsList.subList(0, q.k());
+                }
+                if (mostPopular.isEmpty()) {
+                    return Collections.emptyList().toString();
+                }
+                return mostPopular.toString();
+            } else {
+                for (int i = 0; i < hyps.size(); i = i + 1) {
+                    Double popularKey = maxPQ.poll();
+                    if (popularKey != 0.0) {
+                        mostPopular.add(hyponymsMap.get(popularKey));
+                    } else {
+                        break;
+                    }
+                }
+                if (mostPopular.isEmpty()) {
+                    return Collections.emptyList().toString();
+                }
+                return mostPopular.toString();
             }
         }
-
-        Collections.sort(hypsList);
-        return "[" + String.join(", ", hypsList) + "]";
     }
 }

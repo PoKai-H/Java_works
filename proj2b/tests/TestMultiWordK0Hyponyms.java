@@ -29,8 +29,57 @@ public class TestMultiWordK0Hyponyms {
         String expected = "[alteration, change, increase, jump, leap, modification, saltation, transition]";
         assertThat(actual).isEqualTo(expected);
     }
+    @Test
+    public void testBowlGalleryK0() {
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                WORDS_FILE, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("bowl", "gallery");
 
-    // TODO: Add more unit tests (including edge case tests) here.
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
+        String actual = studentHandler.handle(nq);
+        String expected = "[amphitheater, amphitheatre]";
+        assertThat(actual).isEqualTo(expected);
+    }
 
-    // TODO: Create similar unit test files for the k != 0 cases.
+    /** This is another example from the spec where the user enters female, animal. */
+    @Test
+    public void testFemaleAnimalK0() {
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                WORDS_FILE, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("female", "animal");
+
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
+        String actual = studentHandler.handle(nq);
+        String expected = "[amazon, bird, cat, chick, dam, demoiselle, female, female_mammal, filly, hag, hen, nanny, nymph, siren]";
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    /** This is another example from the spec where the user enters female, leader. */
+    @Test
+    public void testFemaleLeaderK0() {
+        System.out.println("NOTE: For the female, leader test, you have to fill in the expected text AND List<String> words yourself, otherwise this test will likely crash due to a null pointer exception");
+
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                WORDS_FILE, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("female","leader"); // <-- replace with the appropriate list of words!
+
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
+        String actual = studentHandler.handle(nq);
+        String expected = "[crown_princess, marchioness, materfamilias, matriarch, mayoress, mistress, vicereine, viscountess]";
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void testEnergyLightSparkleK0() {
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                WORDS_FILE, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("energy", "light", "sparkle"); // <-- replace with the appropriate list of words!
+
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
+        String actual = studentHandler.handle(nq);
+        String expected = "[light, scintillation, spark, sparkle, twinkle]";
+        assertThat(actual).isEqualTo(expected);
+    }
+
+
 }

@@ -38,13 +38,13 @@ public class Graph {
         }
     }
 
-    public HashSet<String> hyponyms(String word) {
+    public TreeSet<String> hyponyms(String word) {
         List<Integer> nums = sets.get(word);
         if (sets.get(word) == null) {
             nums = new ArrayList<>();
         }
 
-        HashSet<String> hyponym = new HashSet<>();
+        TreeSet<String> hyponym = new TreeSet<>();
         for (Integer num : nums) {
             hyponym.addAll(graph.bfs(graph.getNode(num)));
         }

@@ -27,21 +27,5 @@ public class TestOneWordK0Hyponyms {
         String expected = "[act, action, change, demotion, human_action, human_activity, variation]";
         assertThat(actual).isEqualTo(expected);
     }
-    @Test
-    public void testHyponymsSimple(){
-        Graph wn=new Graph("./data/wordnet/synsets11.txt","./data/wordnet/hyponyms11.txt");
-        assertThat(wn.hyponyms("antihistamine")).isEqualTo("[antihistamine, actifed]");
-    }
 
-    @Test
-    public void testHyponymsSimpple2() {
-        Graph wn=new Graph("./data/wordnet/synsets16.txt","./data/wordnet/hyponyms16.txt");
-        assertThat(wn.hyponyms("event")).isEqualTo("[event, happening, occurrence, occurrent, natural_event, act, human_action, human_activity, transition]");
-    }
-    @Test
-    public void testHyponymsMutilple() {
-        Graph wn=new Graph("./data/wordnet/synsets16.txt","./data/wordnet/hyponyms16.txt");
-        assertThat(wn.hyponyms("event")).isEqualTo("[event, happening, occurrence, occurrent, natural_event, act, human_action, human_activity, transition]");
-    }
-    // TODO: Add more unit tests (including edge case tests) here.
 }
