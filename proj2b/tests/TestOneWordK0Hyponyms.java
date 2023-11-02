@@ -1,9 +1,11 @@
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
+import main.WordNet;
 import org.junit.jupiter.api.Test;
 import main.AutograderBuddy;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -26,6 +28,21 @@ public class TestOneWordK0Hyponyms {
         String expected = "[act, action, change, demotion, human_action, human_activity, variation]";
         assertThat(actual).isEqualTo(expected);
     }
+    @Test
+    public void testHyponymsSimple(){
+        WordNet wn=new WordNet("./data/wordnet/synsets11.txt","./data/wordnet/hyponyms11.txt");
+        assertThat(wn.hyponyms("antihistamine")).isEqualTo(Set.of("antihistamine","actifed"));
+    }
 
+    @Test
+    public void testHyponymsSimpple2() {
+        WordNet wn=new WordNet("./data/wordnet/synsets16.txt","./data/wordnet/hyponyms16.txt");
+        assertThat(wn.hyponyms("event")).isEqualTo(Set.of("event", "happening occurrence occurrent natural_event", "act human_action human_activity","transition"));
+    }
+    @Test
+    public void testHyponymsMutilple() {
+        WordNet wn=new WordNet("./data/wordnet/synsets16.txt","./data/wordnet/hyponyms16.txt");
+        assertThat(wn.hyponyms("event")).isEqualTo(Set.of("event", "happening occurrence occurrent natural_event", "act human_action human_activity","transition"));
+    }
     // TODO: Add more unit tests (including edge case tests) here.
 }
