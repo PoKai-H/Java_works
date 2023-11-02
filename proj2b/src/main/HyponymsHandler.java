@@ -3,14 +3,13 @@ package main;
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 import ngrams.NGramMap;
-
 import java.util.*;
 
 public class HyponymsHandler extends NgordnetQueryHandler {
-    WordNetNew ngrams;
+    Graph ngrams;
     NGramMap gramMap;
 
-    public HyponymsHandler(WordNetNew ngrams, NGramMap gramMap) {
+    public HyponymsHandler(Graph ngrams, NGramMap gramMap) {
         super();
         this.ngrams = ngrams;
         this.gramMap = gramMap;
@@ -57,6 +56,4 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         Collections.sort(hypsList);
         return "[" + String.join(", ", hypsList) + "]";
     }
-
-
 }

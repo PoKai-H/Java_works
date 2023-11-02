@@ -15,14 +15,13 @@ public class Main {
         String synsetFile = "./data/wordnet/synsets16.txt";
         String hyponymFile = "./data/wordnet/hyponyms16.txt";
         //NGramMap ngm = new NGramMap(wordFile, countFile);
-        WordNetNew wm = new WordNetNew(synsetFile, hyponymFile);
-        NGramMap nm = new NGramMap(wordFile, countFile);
-
+        Graph g = new Graph(synsetFile, hyponymFile);
+        NGramMap ngm = new NGramMap(wordFile, countFile);
 
         hns.startUp();
         hns.register("history", new DummyHistoryHandler());
         hns.register("historytext", new DummyHistoryTextHandler());
-        hns.register("hyponyms", new HyponymsHandler(wm, nm));
+        hns.register("hyponyms", new HyponymsHandler(g, ngm));
 
         System.out.println("Finished server startup! Visit http://localhost:4567/ngordnet.html");
     }

@@ -1,7 +1,8 @@
 package main;
+
 import java.util.*;
 
-class GraphNew {
+class WordGraph {
     HashMap<Integer, Node> nodes;
     Node root;
 
@@ -22,7 +23,7 @@ class GraphNew {
         public int getId() { return id; }
     }
 
-    public GraphNew() {
+    public WordGraph() {
         nodes = new HashMap<>();
     }
 
