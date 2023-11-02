@@ -22,7 +22,7 @@ public class Main {
         hns.startUp();
         hns.register("history", new DummyHistoryHandler());
         hns.register("historytext", new DummyHistoryTextHandler());
-        hns.register("hyponyms", new HyponymHandler(wm, nm));
+        hns.register("hyponyms", new HyponymsHandler(wm, nm));
 
         System.out.println("Finished server startup! Visit http://localhost:4567/ngordnet.html");
     }

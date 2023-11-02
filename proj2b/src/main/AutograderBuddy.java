@@ -12,6 +12,6 @@ public class AutograderBuddy {
 
             WordNetNew wn = new WordNetNew(synsetFile, hyponymFile);
             NGramMap ngm = new NGramMap(wordFile, countFile);
-            return new HyponymHandler(wn, ngm);
+            return new HyponymsHandler(wn, ngm);
     }
 }
