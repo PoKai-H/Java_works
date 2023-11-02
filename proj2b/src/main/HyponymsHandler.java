@@ -1,5 +1,4 @@
 package main;
-
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 import ngrams.NGramMap;
@@ -39,7 +38,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         if (k == 0) {
             return hyps.toString();
         } else {
-            Map<Double, String> hyponymsMap = new HashMap<>();
+            Map<String, Double> hyponymsMap = new HashMap<>();
             PriorityQueue<Double> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
 
             for (String hyponym : hyps) {
@@ -49,7 +48,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 for (Double al : aLs) {
                     sum = sum + al;
                 }
-                hyponymsMap.put(sum, hyponym);
+                hyponymsMap.put(hyponym, sum);
                 maxPQ.add(sum);
             }
             TreeSet<String> mostPopular = new TreeSet<>();
@@ -57,7 +56,11 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 for (int i = 0; i < k; i = i + 1) {
                     Double popularKey = maxPQ.poll();
                     if (popularKey != 0.0) {
-                        mostPopular.add(hyponymsMap.get(popularKey));
+                        for(String hy: hyponymsMap.keySet()) {
+                            if (hyponymsMap.get(hy) == popularKey) {
+                                mostPopular.add(hy);
+                            }
+                        }
                     } else {
                         break;
                     }
@@ -71,7 +74,11 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 for (int i = 0; i < hyps.size(); i = i + 1) {
                     Double popularKey = maxPQ.poll();
                     if (popularKey != 0.0) {
-                        mostPopular.add(hyponymsMap.get(popularKey));
+                        for(String hy: hyponymsMap.keySet()) {
+                            if (hyponymsMap.get(hy) == popularKey) {
+                                mostPopular.add(hy);
+                            }
+                        }
                     } else {
                         break;
                     }
