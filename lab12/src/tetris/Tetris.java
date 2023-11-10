@@ -5,6 +5,7 @@ import tileengine.TETile;
 import tileengine.TERenderer;
 import tileengine.Tileset;
 
+import java.awt.*;
 import java.util.*;
 
 /**
@@ -220,7 +221,9 @@ public class Tetris {
      */
     private void renderScore() {
         // TODO: Use the StdDraw library to draw out the score.
-
+        StdDraw.setPenColor(Color.white);
+        StdDraw.text(7.0, 19, "Score: " + String.valueOf(score));
+        StdDraw.show();
     }
 
     /**
