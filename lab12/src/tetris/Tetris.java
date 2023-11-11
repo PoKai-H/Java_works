@@ -158,6 +158,7 @@ public class Tetris {
                 // if one tile in this row is Tileset.NOTHING, than this row won't be a full line
                 if (board[j][i] == Tileset.NOTHING) {
                     isFullLine = false;
+                    continue;
                 }
             }
             if (isFullLine) {
