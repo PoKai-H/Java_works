@@ -18,8 +18,15 @@ public class AutograderBuddy {
      * @return the 2D TETile[][] representing the state of the world
      */
     public static TETile[][] getWorldFromInput(String input) {
-
-        throw new RuntimeException("Please fill out AutograderBuddy!");
+        Engine engine = new Engine();
+        if (input.charAt(0) == 'N' && input.charAt(input.length() - 1) == 'S') {
+            String seedString = input.substring(1, input.length() - 1);
+            Integer seed = Integer.parseInt(seedString);
+            return engine.createWorldWithSeedFromInput(seed);
+            // Now you have 'N' at the beginning, 'S' at the end, and the seed in between
+        } else {
+            throw new IllegalArgumentException("Input string must start with 'N' and end with 'S'");
+        }
 
     }
 
