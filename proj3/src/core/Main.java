@@ -1,8 +1,6 @@
 package core;
 
-import edu.princeton.cs.algs4.StdDraw;
-import tileengine.TERenderer;
-import tileengine.TETile;
+
 
 
 public class Main {

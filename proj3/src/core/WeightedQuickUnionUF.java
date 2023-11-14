@@ -34,7 +34,9 @@ public class WeightedQuickUnionUF {
     public void union(int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
-        if (rootP == rootQ) return;
+        if (rootP == rootQ) {
+            return;
+        }
 
         // Make smaller root point to larger one
         if (size[rootP] < size[rootQ]) {
@@ -51,7 +53,7 @@ public class WeightedQuickUnionUF {
     private void validate(int p) {
         int n = parent.length;
         if (p < 0 || p >= n) {
-            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (n-1));
+            throw new IllegalArgumentException("index " + p + " is not between 0 and " + (n - 1));
         }
     }
 }

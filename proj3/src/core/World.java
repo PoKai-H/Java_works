@@ -41,7 +41,7 @@ public class World {
 
 
 
-    private final TETile[][] tiles ;
+    private final TETile[][] tiles;
     private final int WIDTH;
     private final int HEIGHT;
     private final Random RANDOM;
@@ -69,7 +69,7 @@ public class World {
         int id;
         List<Room> connected = new ArrayList<>();
 
-        private Room(int posX, int posY, int width, int height, int id){
+        private Room(int posX, int posY, int width, int height, int id) {
             this.positionX = posX;
             this.positionY = posY;
             this.width = width;
@@ -104,7 +104,7 @@ public class World {
         for (int i = 0; i < rooms.size(); i++) {
             if (!uf.connected(0, i)) {  // Assuming 0 is the starting room
                 Room source = rooms.get(i);
-                Room target = rooms.get(i-1);
+                Room target = rooms.get(i - 1);
                 connectEdge(source, target);
                 uf.union(source.getId(), target.getId());
                 System.out.println(source);
@@ -165,22 +165,22 @@ public class World {
                     // Check the adjacent tiles for Tileset.NOTHING
                     if (tiles[x + 1][y] == Tileset.NOTHING) {
                         tiles[x + 1][y] = Tileset.WALL;
-                        Pos pos = new Pos(x+1, y);
+                        Pos pos = new Pos(x + 1, y);
                         wallPoints.add(pos);
                     }
                     if (tiles[x - 1][y] == Tileset.NOTHING) {
                         tiles[x - 1][y] = Tileset.WALL;
-                        Pos pos = new Pos(x-1, y);
+                        Pos pos = new Pos(x - 1, y);
                         wallPoints.add(pos);
                     }
                     if (tiles[x][y + 1] == Tileset.NOTHING) {
                         tiles[x][y + 1] = Tileset.WALL;
-                        Pos pos = new Pos(x, y+1);
+                        Pos pos = new Pos(x, y + 1);
                         wallPoints.add(pos);
                     }
                     if (tiles[x][y - 1] == Tileset.NOTHING) {
                         tiles[x][y - 1] = Tileset.WALL;
-                        Pos pos = new Pos(x, y-1);
+                        Pos pos = new Pos(x, y - 1);
                         wallPoints.add(pos);
                     }
                 }
@@ -210,7 +210,7 @@ public class World {
         List<Room> roomCopy = new ArrayList<>(rooms);
         List<Room> closestRooms = new ArrayList<>();
         int i = 0;
-        while ( i < source.edges) {
+        while (i < source.edges) {
             Room temp = findClosestRoom(source, roomCopy);
             if (!temp.connected.contains(source)) {
                 closestRooms.add(temp);
@@ -240,7 +240,7 @@ public class World {
         // Connect horizontally until aligned with target room center
         int horizontalDirection = Integer.compare(target.positionX, x);
         while (x != target.positionX) {
-            if (tiles[x][y] == Tileset.NOTHING ) {
+            if (tiles[x][y] == Tileset.NOTHING) {
                 tiles[x][y] = Tileset.FLOOR;
             }
             x += horizontalDirection;
@@ -249,14 +249,14 @@ public class World {
         // Connect vertically until in target room center
         int verticalDirection = Integer.compare(target.positionY, y);
         while (y != target.positionY) {
-            if (tiles[x][y] == Tileset.NOTHING ) {
+            if (tiles[x][y] == Tileset.NOTHING) {
                 tiles[x][y] = Tileset.FLOOR;
             }
             y += verticalDirection;
         }
     }
 
-    private void createLockDoor(){
+    private void createLockDoor() {
         int randomPos = RANDOM.nextInt(wallPoints.size());
         Pos lockDoorPos = wallPoints.get(randomPos);
         tiles[lockDoorPos.x][lockDoorPos.y] = Tileset.LOCKED_DOOR;

@@ -8,7 +8,7 @@ public class Engine {
     private static final int WIDTH = 100;
     private static final int HEIGHT = 50;
 
-    public TETile[][] createWorldWithSeedFromInput(Long seed){
+    public TETile[][] createWorldWithSeedFromInput(Long seed) {
         World world = new World(WIDTH, HEIGHT, seed);
         return world.getTiles();
     }
