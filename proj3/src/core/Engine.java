@@ -8,7 +8,7 @@ public class Engine {
     private static final int WIDTH = 100;
     private static final int HEIGHT = 50;
 
-    public TETile[][] createWorldWithSeedFromInput(Integer seed){
+    public TETile[][] createWorldWithSeedFromInput(Long seed){
         World world = new World(WIDTH, HEIGHT, seed);
         return world.getTiles();
     }
@@ -71,7 +71,7 @@ public class Engine {
     }
 
     private void createWorldWithSeed(String seed) {
-        int randomSeed = Integer.parseInt(seed); // Convert seed to an integer
+        Long randomSeed = Long.parseLong(seed); // Convert seed to an integer
         World world = new World(WIDTH, HEIGHT, randomSeed);
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);

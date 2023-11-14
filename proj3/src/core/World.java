@@ -83,7 +83,7 @@ public class World {
             return id;
         }
     }
-    public World(int width, int height, int seed) {
+    public World(int width, int height, Long seed) {
         this.WIDTH = width;
         this.HEIGHT = height;
         this.RANDOM = new Random(seed);

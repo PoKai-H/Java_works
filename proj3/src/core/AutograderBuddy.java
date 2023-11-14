@@ -21,7 +21,7 @@ public class AutograderBuddy {
         Engine engine = new Engine();
 
         String seedString = input.substring(1, input.length() - 1);
-        Integer seed = Integer.parseInt(seedString);
+        Long seed = Long.parseLong(seedString);
         return engine.createWorldWithSeedFromInput(seed);
             // Now you have 'N' at the beginning, 'S' at the end, and the seed in between
 
